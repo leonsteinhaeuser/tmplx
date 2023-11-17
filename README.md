@@ -14,7 +14,7 @@ go install github.com/leonsteinhaeuser/tmplx@latest
 
 ### Docker
 
-You can also use the Docker image to run tmplx. The image is based on [Alpine Linux](https://alpinelinux.org/) and is only a few MB in size.
+You can also use the Docker image to run tmplx. The image is based on [gcr.io/distroless/static](gcr.io/distroless/static) and is only a few MB in size.
 
 ## Build
 

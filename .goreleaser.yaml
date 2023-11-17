@@ -10,9 +10,9 @@ before:
     - go generate ./...
 
 builds:
-  - id: controller
+  - id: tmplx
     main: main.go
-    binary: controller
+    binary: tmplx
     env:
       - CGO_ENABLED=0
     goarch:
@@ -36,7 +36,7 @@ archives:
       {{- else }}{{ .Arch }}{{ end }}
       {{- if .Arm }}v{{ .Arm }}{{ end }}
     builds:
-      - controller
+      - tmplx
     files:
       - LICENSE
       - README.md
