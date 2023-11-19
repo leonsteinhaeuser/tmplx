@@ -1,0 +1,28 @@
+Hello World!
+
+------
+
+{|- range $key, $value := .Values |}
+    {| $key |} = {| $value |}
+    Username and Password: {| hasPrefix "TMPLX_USER_ACCOUNT_" $key |}
+
+{|- end |}
+
+------
+
+{|- $myMap := filterMap .Values "TMPLX_USER_ACCOUNT_" |}
+{|- if gt (mapLength $myMap) 0 |}
+[
+{|- end |}
+{|- range $key, $value := $myMap |}
+    {|- $usrPw := splitN $value ":" 2 |}
+    {|- $usr := index $usrPw 0 |}
+    {|- $pw := index $usrPw 1 |}
+    (
+        username = {| $usr |}
+        password = {| $pw |}
+    )
+{|- end |}
+{|- if gt (mapLength $myMap) 0 |}
+]
+{|- end |}
