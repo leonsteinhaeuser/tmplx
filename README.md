@@ -30,8 +30,8 @@ To build the binary yourself, you need to have Go installed. Then, clone the rep
 | `-o` | `--output` | string | The path to the output file. (default "output.txt") |
 | `-s` | `--source` | string | The path to the source file containing template data. Valid values are: <file>.<json|yaml>. If format is env, this flag caries the  |prefix for the environment variables. (default "TMPLX_")
 | `-t` | `--template` | string | The path to the template file. (default "template.tmpl") |
-| `-l` | `delim-left` | string | `{{` | The left delimiter for the template engine. |
-| `-r` | `delim-right` | string | `}}` | The right delimiter for the template engine. |
+| `-l` | `--delim-left` | string | `{{` | The left delimiter for the template engine. |
+| `-r` | `--delim-right` | string | `}}` | The right delimiter for the template engine. |
 | `-v` | `--version` | | version for tmpls |
 
 ### Example
