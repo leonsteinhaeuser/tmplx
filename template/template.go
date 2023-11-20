@@ -35,18 +35,23 @@ func DataSource(src string) (DataSourceFunc, error) {
 	}
 }
 
-func newTemplate(templateData []byte) (*template.Template, error) {
-	return template.New("my").Funcs(sprig.FuncMap()).Funcs(GenericFuncMap()).Parse(string(templateData))
+func newTemplate(templateData []byte, options ...TemplateOption) (*template.Template, error) {
+	t := template.New("my").Funcs(sprig.FuncMap()).Funcs(GenericFuncMap())
+	// apply options
+	for _, opt := range options {
+		opt(t)
+	}
+	return t.Parse(string(templateData))
 }
 
 // Render renders the template data to the given writer.
-func Render(templateData []byte, data map[string]any) ([]byte, error) {
+func Render(templateData []byte, data map[string]any, options ...TemplateOption) ([]byte, error) {
 	// create template
-	t, err := newTemplate(templateData)
+	t, err := newTemplate(templateData, options...)
 	if err != nil {
 		return nil, err
 	}
-	// parse template
+	// execute template
 	bbuf := bytes.NewBuffer([]byte{})
 	err = t.Execute(bbuf, Data{Values: data})
 	if err != nil {

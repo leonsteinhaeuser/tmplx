@@ -31,7 +31,13 @@ var (
 				return err
 			}
 
-			tmplBts, err := template.Render(tmplTemplate, tmplData)
+			options := []template.TemplateOption{}
+			// check if delimiters are set
+			if *flagValueDelimLeft != "" && *flagValueDelimRight != "" {
+				options = append(options, template.WithDelims(*flagValueDelimLeft, *flagValueDelimRight))
+			}
+
+			tmplBts, err := template.Render(tmplTemplate, tmplData, options...)
 			if err != nil {
 				return err
 			}
@@ -63,6 +69,8 @@ var (
 	flagValueFormat       *string
 	flagValueSource       *string
 	flagValueDryRun       *bool
+	flagValueDelimLeft    *string
+	flagValueDelimRight   *string
 )
 
 // we use the init function to setup the version information and flags for the root command
@@ -94,6 +102,8 @@ func init() {
 	flagValueFormat = rootCmd.Flags().StringP("format", "f", "env", "The format of the template data. Valid values are: env, json, yaml.")
 	flagValueSource = rootCmd.Flags().StringP("source", "s", "TMPLX_", "The path to the source file containing template data. Valid values are: <file>.<json|yaml>. If format is env, this flag caries the prefix for the environment variables.")
 	flagValueDryRun = rootCmd.Flags().BoolP("dry-run", "d", false, "If set, the output will not be written to the output file.")
+	flagValueDelimLeft = rootCmd.Flags().StringP("delim-left", "l", "{{", "The left delimiter for the template.")
+	flagValueDelimRight = rootCmd.Flags().StringP("delim-right", "r", "}}", "The right delimiter for the template.")
 }
 
 func main() {
